@@ -27,11 +27,7 @@ class Man
   end
 
   def add_to_word(letter)
-    @word_to_guess.each_with_index do |curr_letter, i|
-      if curr_letter == letter
-        @word[i] = letter
-      end
-    end
+    @word_to_guess.each_with_index { |curr_letter, i| @word[i] = letter if curr_letter == letter }
   end
 
   def still_alive
