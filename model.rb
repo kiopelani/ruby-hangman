@@ -1,7 +1,8 @@
 require_relative "word_bank.rb"
 
 class Man
-  attr_reader :letter_bank, :body_parts_remaining, :word
+  attr_reader :letter_bank, :word, :word_to_guess
+  attr_accessor :body_parts_remaining
 
   def initialize
     @word_to_guess = Word.get_new
