@@ -1,6 +1,4 @@
-
 module Draw
-
   def self.welcome
     puts "*        *                      *        *"
     puts " *      *                        *      *"
@@ -13,7 +11,63 @@ module Draw
     puts "*        *                      *        *"
   end
 
-  def self.man(num_of_parts)
+  def self.gameboard(man)
+    Draw.man(man.body_parts_remaining)
+    Draw.word(man.word)
+    Draw.letter_bank(man.letter_bank)
+  end
+
+  def self.letter_bank(letters)
+    puts "|-------LETTERS REMAINING--------|"
+    puts '*' * 33
+    puts "**  " + letters[0..(letters.length/ 2)-1].join(" ") + "  **"
+    puts "**  " + letters[(letters.length / 2)..-1].join(" ") + "  **"
+    puts '*' * 33
+  end
+
+  def self.word(current_word)
+    puts
+    puts "WORD: " + current_word.join("|")
+    puts
+  end
+
+  def self.deadman
+    puts "________"
+    puts "|   |"
+    puts "|   _"
+    puts "| _| |_"
+    puts "| (X_X)"
+    puts "| -( )-"
+    puts "|  / \\"
+    puts "|"
+    puts "_______________"
+    puts "OH NO!! YOU'RE DEAD!!"
+    puts "*        *"
+    puts " *      *"
+    puts "  *    *"
+    puts "   *  *"
+    puts "    **"
+    puts "   *  *"
+    puts "  *    *"
+    puts " *      *"
+    puts "*        *"
+  end
+
+  def self.saved
+    puts "________"
+    puts "|   "
+    puts "|"
+    puts "|   _"
+    puts "| _| |_"
+    puts "| (^_^)"
+    puts "| -( )-"
+    puts "|  / \\"
+    puts "_______________"
+    puts "HOORAY! NO HANGING TODAY!"
+  end
+
+  private
+   def self.man(num_of_parts)
     case num_of_parts
     when 7
       self.empty_gallows
@@ -35,68 +89,6 @@ module Draw
       puts "ERROR"
     end
   end
-
-  def self.letter_bank(letters)
-    puts "|-------LETTERS REMAINING--------|"
-    puts '*' * 33
-    puts "**  " + letters[0..(letters.length/ 2)-1].join(" ") + "  **"
-    puts "**  " + letters[(letters.length / 2)..-1].join(" ") + "  **"
-    puts '*' * 33
-  end
-
-  def self.word(current_word)
-    puts
-    puts "WORD: " + current_word.join("|")
-    puts
-  end
-
-  def self.deadman
-    puts "*        *"
-    puts " *      *"
-    puts "  *    *"
-    puts "   *  *"
-    puts "    **"
-    puts "   *  *"
-    puts "  *    *"
-    puts " *      *"
-    puts "*        *"
-
-    puts "OH NO! YOU'RE DEAD!"
-    puts "________"
-    puts "|   |"
-    puts "|   _"
-    puts "| _| |_"
-    puts "| (X_X)"
-    puts "| -( )-"
-    puts "|  / \\"
-    puts "|"
-    puts "_______________"
-
-    puts "*        *"
-    puts " *      *"
-    puts "  *    *"
-    puts "   *  *"
-    puts "    **"
-    puts "   *  *"
-    puts "  *    *"
-    puts " *      *"
-    puts "*        *"
-  end
-
-  def self.saved
-    puts "HOORAY! NO HANGING TODAY!"
-    puts "________"
-    puts "|   "
-    puts "|"
-    puts "|   _"
-    puts "| _| |_"
-    puts "| (^_^)"
-    puts "| -( )-"
-    puts "|  / \\"
-    puts "_______________"
-  end
-
-  private
 
   def self.empty_gallows
     puts "_______"
