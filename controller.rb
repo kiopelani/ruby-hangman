@@ -1,4 +1,5 @@
 require_relative "model.rb"
+require_relative "view.rb"
 
 class Game
   def initialize
@@ -8,6 +9,9 @@ class Game
   end
 
   def play
+    clear_screen!
+    move_to_home!
+    Draw.welcome
     while true
       game_status
       puts "Would you like to play a new round? Type 'yes' to play or 'no' to stop."
@@ -24,38 +28,56 @@ class Game
   end
 
   private
+
+  def clear_screen!
+    print "\e[2J"
+  end
+
+  def move_to_home!
+    print "\e[H"
+  end
+
   def game_status
     puts "You have won #{@rounds_won} rounds and played #{@rounds_played} rounds."
   end
 
-  def round_status
-    puts "You have #{@current_man.body_parts_remaining} body parts remaining and the following letters left:"
-    puts @current_man.display_letter_bank
-  end
+  # def round_status
+  #   puts "You have #{@current_man.body_parts_remaining} body parts remaining and the following letters left:"
+  #   puts @current_man.display_letter_bank
+  # end
 
   def start_new_round
     @current_man = Man.new
     play_round
     @rounds_played += 1
-    puts "GAME OVER!!"
+    puts "************GAME OVER!!************"
   end
 
   def play_round
     while @current_man.still_alive
-      @current_man.display_word
-      round_status
+      clear_screen!
+      move_to_home!
+      Draw.man(@current_man.body_parts_remaining)
+      Draw.word(@current_man.word)
+      Draw.letter_bank(@current_man.letter_bank)
       letter_guessed = guess_a_letter
       if @current_man.letter_is_in_word?(letter_guessed)
         @current_man.add_to_word(letter_guessed)
         if @current_man.word_complete?
-          puts "YOU WIN"
+          clear_screen!
+          move_to_home!
+          Draw.saved
           @rounds_won += 1
           break
         end
       else
-        puts "Wrong guess!"
-        @current_man.draw_body_part
-        puts "You're DEAD!" if @current_man.still_alive == false
+        @current_man.add_body_part
+        if @current_man.still_alive == false
+          clear_screen!
+          move_to_home!
+          Draw.deadman
+          @current_man.reveal_word
+        end
       end
       @current_man.remove_from_bank(letter_guessed)
     end
@@ -71,3 +93,4 @@ class Game
     letter_guessed
   end
 end
+

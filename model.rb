@@ -7,7 +7,7 @@ class Man
     @word_to_guess = Word.get_new
     @letter_bank = ("a".."z").to_a
     @word = Array.new(@word_to_guess.length, "_")
-    @body_parts_remaining = 6
+    @body_parts_remaining = 7
   end
 
   def display_word
@@ -22,7 +22,7 @@ class Man
     @word_to_guess.include?(letter.downcase)
   end
 
-  def draw_body_part
+  def add_body_part
     @body_parts_remaining -= 1
   end
 
@@ -41,6 +41,10 @@ class Man
   def remove_from_bank(letter)
     i = @letter_bank.index(letter)
     @letter_bank[i] = "*"
+  end
+
+  def reveal_word
+    puts "The correct word was #{@word_to_guess.join("").upcase}"
   end
 
 end
